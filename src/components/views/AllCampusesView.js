@@ -8,32 +8,46 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const AllCampusesView = (props) => {
-  // If there is no campus, display a message.
-  if (!props.allCampuses.length) {
-    return <div>There are no campuses.</div>;
-  }
+  const { allCampuses } = props;
 
   // If there is at least one campus, render All Campuses view 
   return (
     <div>
       <h1>All Campuses</h1>
 
-      {props.allCampuses.map((campus) => (
-        <div key={campus.id}>
-          <Link to={`/campus/${campus.id}`}>
-            <h2>{campus.name}</h2>
-          </Link>
-          <h4>campus id: {campus.id}</h4>
-          <p>{campus.address}</p>
-          <p>{campus.description}</p>
-          <hr/>
-        </div>
-      ))}
-      <br/>
-      <Link to={`/`}>
+      {/* Link to add a new campus */}
+      <Link to="/new-campus">
         <button>Add New Campus</button>
       </Link>
-      <br/><br/>
+
+      <br /><br />
+
+      {/* If there are no campuses, show fallback message */}
+      {(!allCampuses || allCampuses.length === 0) ? (
+        <p>There are no campuses.</p>
+      ) : (
+        allCampuses.map((campus) => (
+          <div key={campus.id} style={{ marginBottom: "20px" }}>
+            {/* Campus name links to single campus page */}
+            <Link to={`/campus/${campus.id}`}>
+              <h2>{campus.name}</h2>
+            </Link>
+
+            {/* Display campus image or a default placeholder */}
+            <img
+              src={campus.imageUrl}
+              alt={campus.name}
+              width="200"
+              height="150"
+              onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/200x150?text=No+Image"; }}
+            />
+
+            <p>{campus.address}</p>
+            <p>{campus.description}</p>
+            <hr />
+          </div>
+        ))
+      )}
     </div>
   );
 };
