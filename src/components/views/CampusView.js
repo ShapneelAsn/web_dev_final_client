@@ -5,10 +5,22 @@ The Views component is responsible for rendering web page with data provided by 
 It constructs a React component to display a single campus and its students (if any).
 ================================================== */
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 // Take in props data to construct the component
 const CampusView = (props) => {
   const { campus } = props;
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this campus?")) {
+      try {
+        await axios.delete(`/api/campuses/${campus.id}`);
+        window.location.href = "/campuses";
+      } catch (err) {
+        console.error("Failed to delete campus", err);
+      }
+    }
+  };
+
   //console.log("Campus:", campus);
   const fallbackImage = "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?fit=crop&w=800&q=80";
   return (
@@ -32,6 +44,9 @@ const CampusView = (props) => {
       <Link to={`/edit-campus/${campus.id}`}>
         <button>Edit Campus</button>
       </Link>
+      
+      <button onClick={() => handleDelete()}>Delete Campus</button>
+
 
       <h2>Students Enrolled:</h2>
       {campus.students && campus.students.length > 0 ? (
