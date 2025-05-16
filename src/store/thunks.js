@@ -3,7 +3,7 @@
 
 It contains all Thunk Creators and Thunks.
 ================================================== */
-import * as ac from './actions/actionCreators';  // Import Action Creators ("ac" keyword Action Creator)
+import * as ac from './actions/actionCreators'; // Import Action Creators ("ac" keyword Action Creator)
 const axios = require('axios');
 
 //All Campuses
@@ -41,6 +41,18 @@ export const addCampusThunk = (campus) => async (dispatch) => {
   } catch (err) {
     console.error(err);
   }
+};
+
+// Edit Campus
+export const editCampusThunk = (id, campus) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.put(`/api/campuses/${id}`, campus);
+      dispatch(ac.editCampus(res.data));  // ✅ use ac.editCampus
+    } catch (err) {
+      console.error(err);
+    }
+  };
 };
 
 // All Students
