@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 // Take in props data to construct the component
 const CampusView = (props) => {
   const { campus } = props;
-  console.log("Campus:", campus);
+  //console.log("Campus:", campus);
   const fallbackImage = "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?fit=crop&w=800&q=80";
   return (
     <div>
@@ -23,7 +23,7 @@ const CampusView = (props) => {
           style={{ marginBottom: "20px" }}
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?fit=crop&w=800&q=80";
+            e.target.src = fallbackImage;
           }}
         />
       )}
