@@ -1,9 +1,3 @@
-/*==================================================
-AllCampusesView.js
-
-The Views component is responsible for rendering web page with data provided by the corresponding Container component.
-It constructs a React component to display all campuses.
-================================================== */
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -11,7 +5,8 @@ const AllCampusesView = (props) => {
   const { allCampuses } = props;
   const fallbackImage = "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?fit=crop&w=800&q=80";
 
-  // If there is at least one campus, render All Campuses view 
+  const sortedCampuses = [...allCampuses].sort((a, b) => a.id - b.id);
+
   return (
     <div>
       <h1>All Campuses</h1>
@@ -23,18 +18,15 @@ const AllCampusesView = (props) => {
 
       <br /><br />
 
-      {/* If there are no campuses, show fallback message */}
-      {(!allCampuses || allCampuses.length === 0) ? (
+      {(!sortedCampuses || sortedCampuses.length === 0) ? (
         <p>There are no campuses.</p>
       ) : (
-        allCampuses.map((campus) => (
+        sortedCampuses.map((campus) => (
           <div key={campus.id} style={{ marginBottom: "20px" }}>
-            {/* Campus name links to single campus page */}
             <Link to={`/campus/${campus.id}`}>
               <h2>{campus.name}</h2>
             </Link>
 
-            {/* Display campus image or a default placeholder */}
             <img
               src={campus.imageUrl || fallbackImage}
               alt={campus.name}
@@ -56,7 +48,6 @@ const AllCampusesView = (props) => {
   );
 };
 
-// Validate data type of the props passed to component.
 AllCampusesView.propTypes = {
   allCampuses: PropTypes.array.isRequired,
 };

@@ -32,6 +32,17 @@ export const fetchCampusThunk = (id) => async (dispatch) => {  // The THUNK
   }
 };
 
+//Add Campus
+//Thunk creator:
+export const addCampusThunk = (campus) => async (dispatch) => {
+  try {
+    const res = await axios.post("/api/campuses", campus);
+    dispatch({ type: "ADD_CAMPUS", payload: res.data });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 // All Students
 // THUNK CREATOR:
 export const fetchAllStudentsThunk = () => async (dispatch) => {  // The THUNK
