@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 const AllCampusesView = (props) => {
   const { allCampuses } = props;
+  const fallbackImage = "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?fit=crop&w=800&q=80";
 
   // If there is at least one campus, render All Campuses view 
   return (
@@ -35,11 +36,14 @@ const AllCampusesView = (props) => {
 
             {/* Display campus image or a default placeholder */}
             <img
-              src={campus.imageUrl}
+              src={campus.imageUrl || fallbackImage}
               alt={campus.name}
               width="200"
               height="150"
-              onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/200x150?text=No+Image"; }}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = fallbackImage;
+              }}
             />
 
             <p>{campus.address}</p>
