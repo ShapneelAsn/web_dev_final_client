@@ -35,6 +35,9 @@ const StudentView = (props) => {
           ? student.gpa
           : "Not provided"
       }</p>
+      <Link to={`/edit-student/${student.id}`}>
+        <button>Edit Student</button>
+      </Link>
 
       {/* Campus Info */}
       <h3><strong>Enrolled in:</strong> {student.campus ? (
